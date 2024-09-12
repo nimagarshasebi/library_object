@@ -47,7 +47,7 @@ class Book:
         return f'{self.title} by {self.author} ({self.year})'
     
 class User:
-    def __init__(self,username,fname,lname,national_code,year_birth,membership_number,role):
+    def __init__(self,username,fname,lname,national_code,year_birth,membership_number,role,password):
         """
         Initializes a new instance of the User class.
 
@@ -69,7 +69,7 @@ class User:
         self.borrowed_books=[] 
         self.role=role
         self.username=username
-        self.password=None
+        self.password=password
     def borrowing_books(self,book):
         """
         Appends a book to the list of borrowed books.
@@ -150,7 +150,7 @@ class Library(Book,User):
 role=str(input('Enter your role(bookkeeper or customer): '))
 library=Library()
 while True:
-    if role=='bookkeeper':
+    if role=='admin':
         username=str(input('Enter your username: '))
         for user in library.users:
             if user.username==username:
@@ -166,7 +166,49 @@ while True:
                                    6-Return Book
                                    )'''))
                     if task=='1':
-                        
+                        person_username=str(input('Enter your username: '))
+                        first_name=str(input('Enter your first name: '))
+                        last_name=str(input('Enter your last name: '))
+                        national_code=str(input('Enter your national code: '))
+                        year_birth=int(input('Enter your year of birth: '))
+                        membership_number=str(input('Enter your membership number: '))
+                        role=str(input('Enter your role: '))
+                        if role=='bookkeeper':
+                            password=str(input('Enter your password: '))
+                        else:
+                            password=None
+                        user=User(person_username,first_name,last_name,national_code,year_birth,membership_number,role,password)
+                        user_id={'username':person_username,'password':password}
+                        library.add_user(user_id)
+                    elif task=='2':
+                        person_username=str(input('Enter your username: '))
+                        library.remove_user(person_username)
+                    elif task=='3':
+                        title=str(input('Enter the title of the book: '))
+                        author=str(input('Enter the author of the book: '))
+                        year=int(input('Enter the year of the book: '))
+                        isbn=str(input('Enter the ISBN of the book: '))
+                        status=str(input('Enter the status of the book: '))
+                        book=Book(title,author,year,isbn,status)
+                        library.add_book(book)
+
+
+
+                    elif task=='4':
+                        title=str(input('Enter the title of the book: '))
+                        library.remove_book(title)
+                    elif task=='5':
+                        title=str(input('Enter the title of the book: '))
+                        for book in library.books:
+                            if book.title==title:
+                                user.borrowing_books(book)
+                                break
+                    elif task=='6':
+                        title=str(input('Enter the title of the book: '))
+                        for book in library.books:
+                            if book.title==title:
+                                user.returning_books(book)
+                                break
             else:
                 continue
 
