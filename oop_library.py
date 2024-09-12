@@ -158,6 +158,14 @@ if choose=='r':
             break
 elif choose=='b':
     while True:
+        try:
+            title=str(input('Enter title of the book: '))
+        except TypeError:
+            print('Please enter a valid input')
+        contine=input('Enter any key to continue if you want stop please Enter "exit" : ')
+        if contine=='exit':
+            break
+
    
 
 
