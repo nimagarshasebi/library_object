@@ -47,7 +47,7 @@ class Book:
         return f'{self.title} by {self.author} ({self.year})'
     
 class User:
-    def __init__(self,fname,lname,national_code,year_birth,membership_number):
+    def __init__(self,username,fname,lname,national_code,year_birth,membership_number,role):
         """
         Initializes a new instance of the User class.
 
@@ -67,6 +67,9 @@ class User:
         self.year_birth=year_birth
         self.membership_number=membership_number
         self.borrowed_books=[] 
+        self.role=role
+        self.username=username
+        self.password=None
     def borrowing_books(self,book):
         """
         Appends a book to the list of borrowed books.
@@ -108,6 +111,10 @@ class Library(Book,User):
 
     def add_user(self,user):
         self.users.append(user)
+    def remove_book(self,book):
+        self.books.remove(book)
+    def remove_user(self,user):
+        self.users.remove(user)
 
     def search_by_title(self,title):
         for book in self.books:
@@ -140,33 +147,28 @@ class Library(Book,User):
                     return 'The book is borrowed'
             else:
                 return 'The book is not found'
-choose=str(input('what are you doing here?(registe(r) or borrow book(b))'))
-if choose=='r':            
-
-    while True:
-        try:
-           fname_user=str(input('Enter your first name: '))
-           lname_user=str(input('Enter your last name: '))
-           national_code_user=str(input('Enter your national code: '))
-           year_birth_user=int(input('Enter your year of birth: '))
-           membership_number_user=str(input('Enter your membership number: '))
-        except TypeError:
-            print('Please enter a valid input')
-        
-        contine=input('Enter any key to continue if you want stop please Enter "exit" : ')
-        if contine=='exit':
-            break
-elif choose=='b':
-    while True:
-        try:
-            title=str(input('Enter title of the book: '))
-        except TypeError:
-            print('Please enter a valid input')
-        contine=input('Enter any key to continue if you want stop please Enter "exit" : ')
-        if contine=='exit':
-            break
-
-   
+role=str(input('Enter your role(bookkeeper or customer): '))
+library=Library()
+while True:
+    if role=='bookkeeper':
+        username=str(input('Enter your username: '))
+        for user in library.users:
+            if user.username==username:
+                passw=str(input('Enter your password: '))
+                if user.password==passw:
+                    task=str(input('''what do you want to do
+                                   (
+                                   1-Register person
+                                   2-Remove Person
+                                   3-Add Book 
+                                   4-Remove Book
+                                   5-Borrow Book
+                                   6-Return Book
+                                   )'''))
+                    if task=='1':
+                        
+            else:
+                continue
 
 
 
